@@ -1,0 +1,28 @@
+---
+import { readingTime } from '../lib/content.ts';
+export interface Props { post: { id: string; data: { title: string; description: string; date: Date; category: string; tags: string[]; heroImage?: string; heroAlt: string }; body: string }; }
+const { post } = Astro.props;
+const { data } = post;
+const href = `/blog/${post.id}/`;
+const minutes = readingTime(post.body);
+---
+<article class="card">
+  {data.heroImage && (
+    <img src={data.heroImage} alt={data.heroAlt || data.title} class="hero-image" loading="lazy" width="1600" height="900" />
+  )}
+  <div class="card-body">
+    <div class="meta" style="display:flex;align-items:center;justify-content:space-between;gap:var(--space-3);flex-wrap:wrap;">
+      {data.category && <a href={`/blog/categories/${data.category}/`} class="chip">{data.category}</a>}
+      <time style="font-size:14px;color:var(--text-muted);">{data.date.toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' })}</time>
+    </div>
+    <h2 style="margin:var(--space-3) 0 var(--space-3) 0;"><a href={href}>{data.title}</a></h2>
+    <p style="color:var(--text-muted);margin:0 0 var(--space-4) 0;">{data.description}</p>
+    <p style="font-size:14px;color:var(--text-muted);margin:0 0 var(--space-3) 0;">{minutes}</p>
+    <div class="tags" style="display:flex;gap:var(--space-2);flex-wrap:wrap;margin:0 0 var(--space-4) 0;">
+      {data.tags.map((tag) => (
+        <a href={`/blog/tags/${tag}/`} class="chip">#{tag}</a>
+      ))}
+    </div>
+    <a href={href} class="btn-outline btn-sm">Read more<span aria-hidden="true"> &rarr;</span></a>
+  </div>
+</article>

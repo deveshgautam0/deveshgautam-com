@@ -1,0 +1,19 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import GalleryGrid from '../../components/GalleryGrid.astro';
+import gallery from '../../data/gallery.json';
+---
+<BaseLayout title="Images" description="Image components: hero, thumbnails, gallery grid" noindex>
+  <div class="container">
+    <h1 style="margin-bottom:var(--space-4);">Images</h1>
+    <p style="color:var(--text-muted);margin-bottom:var(--space-6);">Hero image (16:9), thumbnails, and the gallery grid.</p>
+    <section style="margin-bottom:var(--space-8);">
+      <h2 style="font-size:20px;margin:0 0 var(--space-4) 0;">Hero (16:9)</h2>
+      <img src="/images/samples/hero.svg" alt="Hero illustration" class="hero-image" loading="lazy" width="1600" height="900" />
+    </section>
+    <section style="margin-bottom:var(--space-8);">
+      <h2 style="font-size:20px;margin:0 0 var(--space-4) 0;">Gallery grid</h2>
+      <GalleryGrid items={gallery} />
+    </section>
+  </div>
+</BaseLayout>

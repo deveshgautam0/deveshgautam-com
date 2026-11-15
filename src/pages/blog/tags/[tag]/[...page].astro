@@ -1,0 +1,25 @@
+---
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import PostCard from '../../../../components/PostCard.astro';
+import Pagination from '../../../../components/Pagination.astro';
+import PageTitle from '../../../../components/PageTitle.astro';
+import { getPosts } from '../../../../lib/content.ts';
+export async function getStaticPaths({ paginate }) {
+  const posts = await getPosts();
+  const tags = [...new Set(posts.flatMap((p) => p.data.tags))];
+  return tags.flatMap((tag) =>
+    paginate(posts.filter((p) => p.data.tags.includes(tag)), { params: { tag }, pageSize: 3 })
+  );
+}
+const { tag } = Astro.params;
+const { page } = Astro.props;
+---
+<BaseLayout title={`Tag: #${tag}`} description={`Posts tagged #${tag}.`}>
+  <div class="container">
+    <div class="prose-column">
+      <PageTitle title={`Tag: #${tag}`} description={`Posts tagged #${tag}.`} />
+      {page.data.map((post) => <PostCard post={post} />)}
+      <Pagination base={`/blog/tags/${tag}/`} currentPage={page.currentPage} lastPage={page.lastPage} start={page.start + 1} end={page.end + 1} total={page.total} />
+    </div>
+  </div>
+</BaseLayout>

@@ -1,0 +1,48 @@
+---
+import BaseLayout from '../../../../../layouts/BaseLayout.astro';
+import PostListItem from '../../../../../components/PostListItem.astro';
+import Pagination from '../../../../../components/Pagination.astro';
+import PageTitle from '../../../../../components/PageTitle.astro';
+import Chip from '../../../../../components/Chip.astro';
+import { getPosts, countBy } from '../../../../../lib/content.ts';
+export async function getStaticPaths({ paginate }) {
+  const posts = await getPosts();
+  const categories = [...new Set(posts.map((p) => p.data.category))];
+  return categories.flatMap((category) =>
+    paginate(posts.filter((p) => p.data.category === category), { params: { category }, pageSize: 6 })
+  );
+}
+const { category } = Astro.params;
+const { page } = Astro.props;
+const posts = await getPosts();
+const allCategories = countBy(posts, 'category');
+const allTags = countBy(posts, 'tags');
+---
+<BaseLayout title={`Explore: Category: ${category}`} description="Browse all posts by category, tag, and year.">
+  <div class="container">
+    <div class="prose-column">
+      <PageTitle title="Explore" description="Browse all posts by category, tag, and year." />
+      <section style="margin-bottom:var(--space-8);">
+        <h2 style="font-size:20px;margin:0 0 var(--space-4) 0;">Categories</h2>
+        <div style="display:flex;flex-wrap:wrap;gap:var(--space-2);">
+          {allCategories.map((c) => (
+            <a href={`/blog/explore/categories/${c.name}/`} class={`chip ${c.name === category ? '' : ''}`}>{c.name} ({c.count})</a>
+          ))}
+        </div>
+      </section>
+      <section style="margin-bottom:var(--space-8);">
+        <h2 style="font-size:20px;margin:0 0 var(--space-4) 0;">Tags</h2>
+        <div style="display:flex;flex-wrap:wrap;gap:var(--space-2);">
+          {allTags.map((t) => (
+            <a href={`/blog/explore/tags/${t.name}/`} class="chip">#{t.name} ({t.count})</a>
+          ))}
+        </div>
+      </section>
+      <h2 style="font-size:20px;margin:0 0 var(--space-4) 0;">Category: {category}</h2>
+      <div style="display:flex;flex-direction:column;gap:var(--space-4);">
+        {page.data.map((p) => <PostListItem post={p} />)}
+      </div>
+      <Pagination base={`/blog/explore/categories/${category}/`} currentPage={page.currentPage} lastPage={page.lastPage} start={page.start + 1} end={page.end + 1} total={page.total} />
+    </div>
+  </div>
+</BaseLayout>

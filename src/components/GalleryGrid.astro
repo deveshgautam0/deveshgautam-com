@@ -1,0 +1,17 @@
+---
+export interface Props { items: { src: string; alt: string }[]; }
+const { items } = Astro.props;
+---
+{items.length ? (
+  <>
+    <div class="gallery-grid" role="grid" aria-label="Gallery">
+      {items.map((item, i) => (
+        <figure class="gallery-item" role="gridcell" aria-label={item.alt} tabindex="0" data-index={i}>
+          <img src={item.src} alt={item.alt} loading="lazy" />
+        </figure>
+      ))}
+    </div>
+  </>
+) : (
+  <p style="color:var(--text-muted);">No photos yet.</p>
+)}

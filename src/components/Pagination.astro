@@ -1,0 +1,25 @@
+---
+import { pageHref } from '../lib/content.ts';
+export interface Props { base: string; currentPage: number; lastPage: number; start: number; end: number; total: number; }
+const { base, currentPage, lastPage, start, end, total } = Astro.props;
+const show = lastPage > 1;
+const pages = Array.from({ length: lastPage }, (_, i) => i + 1);
+const prevPage = currentPage > 1 ? pageHref(base, currentPage - 1) : null;
+const nextPage = currentPage < lastPage ? pageHref(base, currentPage + 1) : null;
+---
+<div class="pagination">
+  <p class="results" style="margin:0;">Showing {start} to {end} of {total} results</p>
+  {show && (
+    <>
+      <div class="pages">
+        {pages.map((n) => (
+          <a href={pageHref(base, n)} class={`btn ${n === currentPage ? 'btn-primary' : 'btn-outline'} btn-sm`}>{n}</a>
+        ))}
+      </div>
+      <div class="prev-next">
+        {prevPage && <a href={prevPage} class="icon-btn" aria-label="Previous page"><span aria-hidden="true">&lsaquo;</span></a>}
+        {nextPage && <a href={nextPage} class="icon-btn" aria-label="Next page"><span aria-hidden="true">&rsaquo;</span></a>}
+      </div>
+    </>
+  )}
+</div>

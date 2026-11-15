@@ -1,0 +1,128 @@
+---
+import Icon from './Icon.astro';
+import site from '../data/site.json';
+const { pathname } = Astro.url;
+const links = [
+  { href: '/blog/', label: 'Blog' },
+  { href: '/blog/explore/', label: 'Explore' },
+  { href: '/projects/', label: 'Projects' },
+  { href: '/about/', label: 'About' },
+  { href: '/gallery/', label: 'Gallery' },
+  { href: '/links/', label: 'Links' },
+];
+const isActive = (href: string) => pathname === href;
+---
+<header class="header" role="banner">
+  <div class="header-inner">
+    <div class="brand">
+      <a href="/" class="brand-link" aria-label={site.name + ' homepage'}>
+        <img src={site.avatar} alt="Profile picture" class="avatar" width="36" height="36" />
+        <span class="brand-name">{site.name}</span>
+      </a>
+    </div>
+    <button class="icon-btn menu-toggle" data-menu-toggle aria-expanded="false" aria-label="Open navigation menu">
+      <Icon name="menu" size="20" />
+    </button>
+    <nav class="nav" data-menu role="navigation">
+      {links.map((link) => (
+        <a href={link.href} class={`nav-link ${isActive(link.href) ? 'current' : ''}`}>{link.label}</a>
+      ))}
+      <button class="icon-btn theme-toggle" data-theme-toggle aria-label="Switch theme" title="Switch theme">
+        <span class="theme-icon theme-sun"><Icon name="sun" size="18" /></span>
+        <span class="theme-icon theme-moon"><Icon name="moon" size="18" /></span>
+      </button>
+    </nav>
+  </div>
+</header>
+<style>
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    height: 64px;
+    background-color: var(--bg);
+    border-bottom: 1px solid var(--border);
+  }
+  .header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 var(--space-4);
+  }
+  @media (min-width: 768px) {
+    .header-inner { padding: 0 var(--space-6); }
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+  .brand-link {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    text-decoration: none;
+  }
+  .avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+    border: 1px solid var(--border);
+  }
+  .brand-name {
+    font-weight: 700;
+    font-size: 18px;
+    color: var(--text);
+  }
+  .nav {
+    display: flex;
+    align-items: center;
+    gap: var(--space-1);
+  }
+  .menu-toggle {
+    display: none;
+  }
+  .theme-toggle {
+    padding: var(--space-2);
+  }
+  .theme-icon { display: flex; align-items: center; justify-content: center; }
+  .theme-moon { display: none; }
+  html.dark .theme-sun { display: none; }
+  html.dark .theme-moon { display: flex; }
+  @media (max-width: 767px) {
+    .menu-toggle { display: block; }
+    .nav {
+      position: absolute;
+      top: 64px;
+      left: 0;
+      right: 0;
+      background-color: var(--bg);
+      border-bottom: 1px solid var(--border);
+      flex-direction: column;
+      align-items: stretch;
+      padding: var(--space-4);
+      gap: 0;
+      display: none;
+    }
+    .nav[data-open] { display: flex; }
+    .nav-link {
+      display: block;
+      padding: var(--space-4) var(--space-5);
+      font-size: 17px;
+      border-radius: 0;
+      border-bottom: 1px solid var(--border);
+      width: 100%;
+    }
+    .nav-link:hover { background-color: var(--bg-soft); }
+    .nav-link.current { color: var(--text); background-color: var(--bg-soft); border-bottom-color: var(--accent); border-width: 1px; }
+    .nav-link.current::after { content: none; border: none; }
+    .theme-toggle { margin-left: auto; padding: var(--space-4); border-radius: var(--radius-sm); }
+    .theme-toggle:hover { background-color: var(--bg-soft); }
+    .header-inner { padding: 0 var(--space-4); }
+  }
+</style>

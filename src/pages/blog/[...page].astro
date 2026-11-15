@@ -1,0 +1,21 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostCard from '../../components/PostCard.astro';
+import Pagination from '../../components/Pagination.astro';
+import PageTitle from '../../components/PageTitle.astro';
+import { getPosts } from '../../lib/content.ts';
+export async function getStaticPaths({ paginate }) {
+  const posts = await getPosts();
+  return paginate(posts, { pageSize: 3 });
+}
+const { page } = Astro.props;
+---
+<BaseLayout title="Blog" description="Here I share what I am building, learning and thinking about. Feel free to read, explore, and share.">
+  <div class="container">
+    <div class="prose-column">
+      <PageTitle title="Blog" description="Here I share what I am building, learning and thinking about. Feel free to read, explore, and share." />
+      {page.data.map((post) => <PostCard post={post} />)}
+      <Pagination base="/blog/" currentPage={page.currentPage} lastPage={page.lastPage} start={page.start + 1} end={page.end + 1} total={page.total} />
+    </div>
+  </div>
+</BaseLayout>

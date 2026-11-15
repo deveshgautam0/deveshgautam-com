@@ -1,0 +1,28 @@
+---
+export interface Props { name: string; size?: number; }
+const { name, size = 20 } = Astro.props;
+const icons = import.meta.glob('../assets/icons/*.svg', { query: '?raw', import: 'default', eager: true });
+const svg = icons[`../assets/icons/${name}.svg`];
+---
+{svg ? (
+  <span class="icon" style={{ '--s': `${size}px` }} set:html={svg} />
+) : (
+  <span class="icon-chip" aria-hidden="true">{name[0].toUpperCase()}</span>
+)}
+<style>
+  .icon svg { width: var(--s, 20px); height: var(--s, 20px); display: block; }
+  .icon-chip {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--s, 20px);
+    height: var(--s, 20px);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background-color: var(--bg-soft);
+    color: var(--text-muted);
+    font-size: 12px;
+    font-weight: 600;
+    font-family: 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
+  }
+</style>

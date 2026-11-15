@@ -1,0 +1,23 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+<BaseLayout title="Embeds" description="Embedded content examples" noindex>
+  <div class="container">
+    <h1 style="margin-bottom:var(--space-4);">Embeds</h1>
+    <p style="color:var(--text-muted);margin-bottom:var(--space-6);">Code blocks, blockquotes and embedded media.</p>
+    <section style="margin-bottom:var(--space-8);">
+      <h2 style="font-size:20px;margin:0 0 var(--space-4) 0;">Code block</h2>
+      <pre class="astro-code"><code>export const title = 'Hello world';</code></pre>
+    </section>
+    <section style="margin-bottom:var(--space-8);">
+      <h2 style="font-size:20px;margin:0 0 var(--space-4) 0;">Blockquote</h2>
+      <blockquote>Write code that humans can read.</blockquote>
+    </section>
+    <section style="margin-bottom:var(--space-8);">
+      <h2 style="font-size:20px;margin:0 0 var(--space-4) 0;">Video embed</h2>
+      <div style="width:100%;aspect-ratio:16/9;border:1px solid var(--border);border-radius:var(--radius);background-color:var(--bg-soft);overflow:hidden;">
+        <iframe src="https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ" title="Example video" style="width:100%;height:100%;border:0;" allowfullscreen></iframe>
+      </div>
+    </section>
+  </div>
+</BaseLayout>

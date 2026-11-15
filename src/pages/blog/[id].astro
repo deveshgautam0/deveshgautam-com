@@ -1,0 +1,62 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { render } from 'astro:content';
+import { getPosts, readingTime, formatDate } from '../../lib/content.ts';
+import TableOfContents from '../../components/TableOfContents.astro';
+import ShareLinks from '../../components/ShareLinks.astro';
+import PostListItem from '../../components/PostListItem.astro';
+import Chip from '../../components/Chip.astro';
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  return posts.map((post) => ({ params: { id: post.id }, props: { post } }));
+}
+const { post } = Astro.props;
+const { Content, headings } = await render(post);
+const { data } = post;
+const allPosts = await getPosts();
+const otherPosts = allPosts.filter((p) => p.id !== post.id).slice(0, 3);
+---
+<BaseLayout title={data.title} description={data.description} image={data.heroImage} type="article">
+  <article class="prose-column">
+    {data.heroImage && <img src={data.heroImage} alt={data.heroAlt || data.title} class="hero-image" loading="lazy" width="1600" height="900" />}
+    <h1>{data.title}</h1>
+    <p style="color:var(--text-muted);margin:0 0 var(--space-3) 0;">{data.description}</p>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:var(--space-3);flex-wrap:wrap;margin:var(--space-3) 0 var(--space-6) 0;">
+      <time style="font-size:14px;color:var(--text-muted);">{formatDate(data.date)}</time>
+      {data.category && <a href={`/blog/categories/${data.category}/`} class="chip">{data.category}</a>}
+      <span style="font-size:14px;color:var(--text-muted);">{readingTime(post.body)}</span>
+    </div>
+    {headings.length >= 3 && (
+      <>
+        <h2>Table of contents</h2>
+        <TableOfContents headings={headings} />
+      </>
+    )}
+    <div class="prose">
+      <Content />
+    </div>
+    {data.tags.length && (
+      <div style="display:flex;gap:var(--space-2);flex-wrap:wrap;margin:var(--space-6) 0 0 0;">
+        {data.tags.map((tag) => <Chip text={`#${tag}`} href={`/blog/tags/${tag}/`} />)}
+      </div>
+    )}
+    <ShareLinks url={new URL(`/blog/${post.id}/`, Astro.site).href} title={data.title} />
+    <h2 style="margin:var(--space-8) 0 var(--space-4) 0;">More posts</h2>
+    {otherPosts.length ? (
+      <div style="display:flex;flex-direction:column;gap:var(--space-4);">
+        {otherPosts.map((p) => <PostListItem post={p} />)}
+      </div>
+    ) : null}
+    <script type="application/ld+json" is:inline>
+      JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": data.title,
+        "datePublished": data.date.toISOString(),
+        "author": { "@type": "Person", "name": "Devesh Gautam" },
+        "image": data.heroImage ? new URL(data.heroImage, Astro.site).href : undefined,
+        "publisher": { "@type": "Organization", "name": "Devesh Gautam" }
+      })
+    </script>
+  </article>
+</BaseLayout>

@@ -1,0 +1,15 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { Content } from '../data/pages/about.md';
+import PageTitle from '../components/PageTitle.astro';
+import site from '../data/site.json';
+---
+<BaseLayout title="About" description="About me page" image={site.avatar}>
+  <div class="container">
+    <div class="prose-column">
+      <PageTitle title="About" />
+      {site.avatar && <img src={site.avatar} alt="Profile picture" width="120" height="120" style="border-radius:50%;display:block;margin:var(--space-4) 0;" />}
+      <Content />
+    </div>
+  </div>
+</BaseLayout>

@@ -1,0 +1,21 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import Pagination from '../../components/Pagination.astro';
+import PageTitle from '../../components/PageTitle.astro';
+import { getProjects } from '../../lib/content.ts';
+export async function getStaticPaths({ paginate }) {
+  const projects = await getProjects();
+  return paginate(projects, { pageSize: 6 });
+}
+const { page } = Astro.props;
+---
+<BaseLayout title="Projects" description="Projects I have built over the past years." image="/og-default.png">
+  <div class="container">
+    <div class="prose-column">
+      <PageTitle title="Projects" description="Projects I have built over the past years." />
+      {page.data.map((project) => <ProjectCard project={project} />)}
+      <Pagination base="/projects/" currentPage={page.currentPage} lastPage={page.lastPage} start={page.start + 1} end={page.end + 1} total={page.total} />
+    </div>
+  </div>
+</BaseLayout>

@@ -1,0 +1,14 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout title="Page not found" description="This page does not exist or was moved.">
+  <div class="container" style="max-width:760px;margin:0 auto;">
+    <h1>Page not found</h1>
+    <p>This page does not exist or was moved.</p>
+    <div style="display:flex;gap:var(--space-3);flex-wrap:wrap;margin-top:var(--space-6);">
+      <a href="/" class="btn-primary">Back to home</a>
+      <a href="/blog/" class="btn-outline">Blog</a>
+      <a href="/projects/" class="btn-outline">Projects</a>
+    </div>
+  </div>
+</BaseLayout>

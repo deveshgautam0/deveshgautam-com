@@ -1,0 +1,96 @@
+media:
+  - name: uploads
+    label: Images
+    input: public/images/uploads
+    output: /images/uploads
+    categories: [image]
+content:
+  - name: blog
+    label: Blog posts
+    type: collection
+    path: src/content/blog
+    filename: '{year}-{month}-{day}-{fields.title}.md'
+    format: yaml-frontmatter
+    view:
+      fields: [title, date, category, draft]
+      primary: title
+    fields:
+      - { name: title, label: Title, type: string, required: true }
+      - { name: description, label: Description (shown on cards and in Google), type: text, required: true }
+      - { name: date, label: Publish date, type: date, required: true, default: now }
+      - name: category
+        label: Category
+        type: select
+        required: true
+        options:
+          values: [tutorials, tips-and-tricks, showcases, notes]
+      - { name: tags, label: Tags, type: string, list: true }
+      - { name: heroImage, label: Hero image, type: image }
+      - { name: heroAlt, label: Hero image description (alt text), type: string }
+      - { name: draft, label: Draft (hide from the site), type: boolean, default: false }
+      - { name: body, label: Content, type: rich-text }
+  - name: projects
+    label: Projects
+    type: collection
+    path: src/content/projects
+    filename: '{year}-{month}-{day}-{fields.title}.md'
+    format: yaml-frontmatter
+    view:
+      fields: [title, date, draft]
+      primary: title
+    fields:
+      - { name: title, label: Title, type: string, required: true }
+      - { name: description, label: Description (shown on cards and in Google), type: text, required: true }
+      - { name: date, label: Publish date, type: date, required: true, default: now }
+      - { name: heroImage, label: Hero image, type: image }
+      - { name: heroAlt, label: Hero image description (alt text), type: string }
+      - { name: demoUrl, label: Demo URL, type: string }
+      - { name: repoUrl, label: Repository URL, type: string }
+      - { name: draft, label: Draft (hide from the site), type: boolean, default: false }
+      - { name: body, label: Content, type: rich-text }
+  - name: gallery
+    label: Gallery
+    type: file
+    path: src/data/gallery.json
+    format: json
+    fields:
+      - name: items
+        label: Photos
+        type: object
+        list: true
+        fields:
+          - { name: src, label: Photo, type: image }
+          - { name: alt, label: Description, type: string }
+  - name: about
+    label: About page
+    type: file
+    path: src/data/pages/about.md
+    format: yaml-frontmatter
+    fields:
+      - { name: body, label: Content, type: rich-text }
+  - name: links
+    label: Links page
+    type: file
+    path: src/data/pages/links.md
+    format: yaml-frontmatter
+    fields:
+      - { name: body, label: Content, type: rich-text }
+  - name: site
+    label: Site settings
+    type: file
+    path: src/data/site.json
+    format: json
+    fields:
+      - { name: name, label: Site name, type: string }
+      - { name: role, label: Role, type: string }
+      - { name: tagline, label: Tagline, type: string }
+      - { name: heroTitle, label: Hero title, type: string }
+      - { name: heroText, label: Hero text, type: text }
+      - { name: heroImage, label: Hero image, type: image }
+      - { name: avatar, label: Avatar, type: image }
+      - { name: email, label: Email, type: string }
+      - { name: github, label: GitHub URL, type: string }
+      - { name: linkedin, label: LinkedIn URL, type: string }
+      - { name: twitter, label: Twitter/X URL, type: string }
+      - { name: youtube, label: YouTube URL, type: string }
+      - { name: instagram, label: Instagram URL, type: string }

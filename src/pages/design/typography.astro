@@ -1,0 +1,37 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+<BaseLayout title="Typography" description="Typography reference" noindex>
+  <div class="container">
+    <div class="prose">
+      <h1 style="margin-bottom:var(--space-4);">Typography</h1>
+      <p style="color:var(--text-muted);margin-bottom:var(--space-6);">A quick reference for headings, paragraphs, lists, links, inline code and tables.</p>
+      <h2>Heading level 2</h2>
+      <p>This is a paragraph of body text at 17px with a line-height of 1.7. It demonstrates regular prose styling with <a href="/blog/">a link</a> and <code>inline code</code>.</p>
+      <h3>Heading level 3</h3>
+      <p>Another paragraph to show spacing and rhythm between blocks of text.</p>
+      <h4>Heading level 4</h4>
+      <p>The smallest heading, used for sub-points within a section.</p>
+      <h2>Lists</h2>
+      <ul>
+        <li>First item in an unordered list.</li>
+        <li>Second item with <a href="/projects/">a link</a>.</li>
+        <li>Third item.</li>
+      </ul>
+      <ol>
+        <li>First ordered step.</li>
+        <li>Second ordered step.</li>
+        <li>Third ordered step.</li>
+      </ol>
+      <h2>Table</h2>
+      <table>
+        <thead><tr><th>Token</th><th>Light</th><th>Dark</th></tr></thead>
+        <tbody>
+          <tr><td>--accent</td><td>var(--accent)</td><td>var(--accent)</td></tr>
+          <tr><td>--bg</td><td>var(--bg)</td><td>var(--bg)</td></tr>
+          <tr><td>--text</td><td>var(--text)</td><td>var(--text)</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</BaseLayout>

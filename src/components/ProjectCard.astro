@@ -1,0 +1,14 @@
+---
+export interface Props { project: { id: string; data: { title: string; description: string; date: Date; heroImage?: string; heroAlt: string; demoUrl?: string; repoUrl?: string }; }; }
+const { project } = Astro.props;
+const { data } = project;
+const href = `/projects/${project.id}/`;
+---
+<article class="card">
+  <img src={data.heroImage || '/og-default.png'} alt={data.heroAlt || data.title} class="hero-image" loading="lazy" width="1600" height="900" />
+  <div class="card-body">
+    <h2 style="margin:var(--space-3) 0 var(--space-2) 0;"><a href={href}>{data.title}</a></h2>
+    <p style="color:var(--text-muted);margin:0 0 var(--space-4) 0;">{data.description}</p>
+    <time style="font-size:14px;color:var(--text-muted);">{data.date.toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' })}</time>
+  </div>
+</article>

@@ -1,0 +1,49 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import PostListItem from '../../../components/PostListItem.astro';
+import Pagination from '../../../components/Pagination.astro';
+import PageTitle from '../../../components/PageTitle.astro';
+import Chip from '../../../components/Chip.astro';
+import { getPosts, countBy, groupByYear } from '../../../lib/content.ts';
+export async function getStaticPaths({ paginate }) {
+  const posts = await getPosts();
+  return paginate(posts, { pageSize: 6 });
+}
+const { page } = Astro.props;
+const posts = await getPosts();
+const categories = countBy(posts, 'category');
+const tags = countBy(posts, 'tags');
+const years = groupByYear(page.data);
+---
+<BaseLayout title="Explore" description="Browse all posts by category, tag, and year.">
+  <div class="container">
+    <div class="prose-column">
+      <PageTitle title="Explore" description="Browse all posts by category, tag, and year." />
+      <section style="margin-bottom:var(--space-8);">
+        <h2 style="font-size:20px;margin:0 0 var(--space-4) 0;">Categories</h2>
+        <div style="display:flex;flex-wrap:wrap;gap:var(--space-2);">
+          {categories.map((c) => (
+            <a href={`/blog/explore/categories/${c.name}/`} class="chip">{c.name} ({c.count})</a>
+          ))}
+        </div>
+      </section>
+      <section style="margin-bottom:var(--space-8);">
+        <h2 style="font-size:20px;margin:0 0 var(--space-4) 0;">Tags</h2>
+        <div style="display:flex;flex-wrap:wrap;gap:var(--space-2);">
+          {tags.map((t) => (
+            <a href={`/blog/explore/tags/${t.name}/`} class="chip">#{t.name} ({t.count})</a>
+          ))}
+        </div>
+      </section>
+      {years.map((y) => (
+        <section key={String(y.year)} style="margin-bottom:var(--space-8);">
+          <h2>{y.year}</h2>
+          <div style="display:flex;flex-direction:column;gap:var(--space-4);">
+            {y.posts.map((p) => <PostListItem post={p} />)}
+          </div>
+        </section>
+      ))}
+      <Pagination base="/blog/explore/" currentPage={page.currentPage} lastPage={page.lastPage} start={page.start + 1} end={page.end + 1} total={page.total} />
+    </div>
+  </div>
+</BaseLayout>

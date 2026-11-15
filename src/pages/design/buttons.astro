@@ -1,0 +1,21 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Icon from '../../components/Icon.astro';
+---
+<BaseLayout title="Buttons" description="Button variants and states" noindex>
+  <div class="container">
+    <h1 style="margin-bottom:var(--space-4);">Buttons</h1>
+    <p style="color:var(--text-muted);margin-bottom:var(--space-6);">Every variant (.btn-primary, .btn-outline, .btn-ghost, .icon-btn), each with hover, focus and active states, plus a disabled example.</p>
+    <section style="margin-bottom:var(--space-8);">
+      <h2 style="font-size:20px;margin:0 0 var(--space-4) 0;">Variants</h2>
+      <div style="display:flex;flex-wrap:wrap;gap:var(--space-3);align-items:center;">
+        <a href="/" class="btn-primary">.btn-primary</a>
+        <a href="/" class="btn-outline">.btn-outline</a>
+        <a href="/" class="btn-ghost">.btn-ghost</a>
+        <button class="icon-btn" aria-label="Example icon button"><Icon name="sun" size="18" /></button>
+        <button class="icon-btn" aria-label="Example icon button" disabled><Icon name="sun" size="18" /></button>
+        <button class="btn-primary" disabled>Disabled</button>
+      </div>
+    </section>
+  </div>
+</BaseLayout>

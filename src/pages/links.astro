@@ -1,0 +1,15 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { Content, getHeadings } from '../data/pages/links.md';
+import PageTitle from '../components/PageTitle.astro';
+import TableOfContents from '../components/TableOfContents.astro';
+---
+<BaseLayout title="Links" description="My personal bookmarks collection" image="/og-default.png">
+  <div class="container">
+    <div class="prose-column">
+      <PageTitle title="Links" />
+      <Content />
+      {getHeadings().length && <TableOfContents headings={getHeadings()} depths={[3, 4]} />}
+    </div>
+  </div>
+</BaseLayout>
