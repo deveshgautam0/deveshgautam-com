@@ -33,5 +33,7 @@
   [ "text-muted", "bg-soft", 4.5, "dark", "chip rest" ],
   [ "text", "accent-soft", 4.5, "dark", "chip hover" ],
   [ "text-muted", "bg", 4.5, "dark", "nav link rest (surface bg)" ],
-  [ "text", "bg-soft", 4.5, "dark", "nav link hover" ]
+  [ "text", "bg-soft", 4.5, "dark", "nav link hover" ],
+  [ "accent", "bg", 3, "light", "nav link current" ],
+  [ "accent", "bg", 3, "dark", "nav link current" ]
 ]

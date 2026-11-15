@@ -32,6 +32,11 @@ const ogImage = new URL(image, Astro.site).href;
     <script is:inline>
       (function () { var t = localStorage.getItem('theme'); var d = t ? t === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches; document.documentElement.classList.toggle('dark', d); })();
     </script>
+    <style is:global>
+      html, body { display: flex; flex-direction: column; min-height: 100vh; }
+      body { margin: 0; }
+      #main { flex: 1; min-height: calc(100vh - 64px - 176px); }
+    </style>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>

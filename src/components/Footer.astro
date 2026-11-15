@@ -15,7 +15,6 @@ const socials = [
   <div class="footer-inner container">
     <div class="footer-info">
       <p class="footer-built">Last built: {built}</p>
-      <p class="footer-design"><a href="/design/" title="Design system">Design system</a></p>
     </div>
     <nav class="footer-social" aria-label="Social links">
       {socials.map((s) => (
@@ -32,6 +31,7 @@ const socials = [
 <style>
   .footer {
     border-top: 1px solid var(--border);
+    margin-top: var(--space-10);
     padding: var(--space-8) 0;
     background-color: var(--bg);
   }
@@ -40,20 +40,20 @@ const socials = [
     margin: 0 auto;
     padding: 0 var(--space-4);
     display: flex;
-    flex-direction: column;
-    gap: var(--space-6);
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-between;
     width: 100%;
+    gap: var(--space-6);
   }
   @media (min-width: 768px) {
-    .footer-inner { flex-direction: row; padding: 0 var(--space-6); }
+    .footer-inner { padding: 0 var(--space-6); }
   }
   .footer-info {
     display: flex;
     flex-direction: column;
     gap: var(--space-2);
-    text-align: center;
+    text-align: left;
+    margin-top: 0;
   }
   .footer-built {
     margin: 0;
@@ -69,9 +69,17 @@ const socials = [
   .footer-design a:hover { color: var(--accent); }
   .footer-social {
     display: flex;
-    gap: var(--space-3);
+    gap: var(--space-2);
     flex-wrap: wrap;
+  }
+  .footer-social .icon-btn {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    min-height: 40px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
     justify-content: center;
   }
-  .footer-social .icon-btn { min-width: 44px; min-height: 44px; }
 </style>

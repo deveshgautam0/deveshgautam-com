@@ -10,7 +10,12 @@ const links = [
   { href: '/gallery/', label: 'Gallery' },
   { href: '/links/', label: 'Links' },
 ];
-const isActive = (href: string) => pathname === href;
+const isActive = (href: string) => {
+  if (href === '/blog/explore/') return pathname.startsWith('/blog/explore/');
+  if (href === '/blog/') return pathname.startsWith('/blog/') && !pathname.startsWith('/blog/explore/');
+  if (href === '/projects/') return pathname === '/projects/' || pathname.startsWith('/projects/');
+  return pathname === href;
+};
 ---
 <header class="header" role="banner">
   <div class="header-inner">
@@ -25,7 +30,7 @@ const isActive = (href: string) => pathname === href;
     </button>
     <nav class="nav" data-menu role="navigation">
       {links.map((link) => (
-        <a href={link.href} class={`nav-link ${isActive(link.href) ? 'current' : ''}`}>{link.label}</a>
+        <a href={link.href} class="nav-link" aria-current={isActive(link.href) ? 'page' : undefined}>{link.label}</a>
       ))}
       <button class="icon-btn theme-toggle" data-theme-toggle aria-label="Switch theme" title="Switch theme">
         <span class="theme-icon theme-sun"><Icon name="sun" size="18" /></span>
@@ -117,12 +122,13 @@ const isActive = (href: string) => pathname === href;
       border-radius: 0;
       border-bottom: 1px solid var(--border);
       width: 100%;
+      color: var(--text-muted);
     }
-    .nav-link:hover { background-color: var(--bg-soft); }
-    .nav-link.current { color: var(--text); background-color: var(--bg-soft); border-bottom-color: var(--accent); border-width: 1px; }
-    .nav-link.current::after { content: none; border: none; }
+    .nav-link:hover { background-color: var(--bg-soft); color: var(--text); }
+    .nav-link[aria-current="page"] { color: var(--accent); font-weight: 600; background: none; }
     .theme-toggle { margin-left: auto; padding: var(--space-4); border-radius: var(--radius-sm); }
     .theme-toggle:hover { background-color: var(--bg-soft); }
+    .theme-toggle:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
     .header-inner { padding: 0 var(--space-4); }
   }
 </style>

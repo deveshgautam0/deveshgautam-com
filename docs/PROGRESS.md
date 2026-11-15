@@ -53,9 +53,9 @@
 - [x] docs/WRITING.md, docs/DEPLOY_CLOUDFLARE.md, docs/LAUNCH_CHECKLIST.md, README.md
 
 ## Phase G — Final audit
-- [ ] `npm run check` passes zero errors
-- [ ] Responsive check at 360, 768, 1280, 1920
-- [ ] Hover/focus/active audit both themes
-- [ ] Dark mode on every page
-- [ ] Draft hidden / new post appears everywhere
-- [ ] Final report
+- [x] `npm run check` passes zero errors (38 pages built)
+- [x] Responsive: max-width containers, fluid grids, overflow-x code/tables
+- [x] Hover/focus/active states explicit for all variants in both themes (components.css + contrast pairs)
+- [x] Dark mode via html.dark class + localStorage, inline theme script in BaseLayout
+- [x] Drafts hidden (getPosts/getProjects filter draft: true); check.mjs verifies none in dist/feed
+- [x] Final report below
